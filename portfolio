@@ -1,0 +1,237 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>John Zamora, Estimator</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+/* Layout: single narrow column like a drawing title block. Header, then one Project Drawings section whose button opens the CSI divisions list. */
+:root {
+  --bg: #f2f4f3;
+  --surface: #ffffff;
+  --ink: #14212b;
+  --muted: #55646f;
+  --line: #cdd5d9;
+  --accent: #b4410f;
+  --accent-ink: #ffffff;
+  --tint: #e6ecee;
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1920; --surface: #15242d; --ink: #e8eef1; --muted: #9aaab4;
+    --line: #2b3d48; --accent: #f29a68; --accent-ink: #1a0e07; --tint: #1b2e38;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1920; --surface: #15242d; --ink: #e8eef1; --muted: #9aaab4;
+  --line: #2b3d48; --accent: #f29a68; --accent-ink: #1a0e07; --tint: #1b2e38;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  padding-block: 40px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.page { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.15; }
+p { margin: 0; }
+.label { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* Title block */
+.titleblock { display: flex; flex-direction: column; gap: 14px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }
+.titleblock h1 { font-size: clamp(2.1rem, 7vw, 3.1rem); font-weight: 700; letter-spacing: -0.01em; }
+.titleblock .role { font-size: 1.15rem; color: var(--muted); }
+.titleblock .intro { max-width: 60ch; }
+
+/* Drawings section */
+.section-head { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.section-head h2 { font-size: 1.6rem; font-weight: 700; }
+.section-head p { color: var(--muted); max-width: 60ch; }
+
+.sheet {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; align-items: stretch;
+}
+.sheet-cover {
+  flex: 0 0 150px; min-width: 0;
+  background: var(--tint);
+  border-right: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.sheet-cover svg { width: 100%; height: auto; max-width: 110px; }
+.sheet-cover .ln { stroke: var(--muted); fill: none; stroke-width: 1.5; }
+.sheet-cover .hi { stroke: var(--accent); fill: none; stroke-width: 2; }
+.sheet-body { flex: 1 1 260px; min-width: 0; padding: 20px; display: flex; flex-direction: column; gap: 12px; justify-content: center; }
+.sheet-body h3 { font-size: 1.15rem; font-weight: 500; }
+.sheet-body .meta { font-family: var(--font-mono); font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+.open-btn {
+  align-self: flex-start;
+  font-family: var(--font-body); font-weight: 600; font-size: 1rem;
+  background: var(--accent); color: var(--accent-ink);
+  border: 0; padding: 12px 20px; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.open-btn:hover { filter: brightness(1.08); }
+.open-btn .chev { display: inline-block; transition: transform 0.2s; }
+.open-btn[aria-expanded="true"] .chev { transform: rotate(90deg); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Divisions */
+.divisions { margin-top: 20px; border: 1px solid var(--line); background: var(--surface); }
+.div-head { padding: 16px 20px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; }
+.div-head h3 { font-size: 1.15rem; font-weight: 500; }
+.div-head p { color: var(--muted); font-size: 0.92rem; }
+.divisions details { border-bottom: 1px solid var(--line); }
+.divisions details:last-child { border-bottom: 0; }
+.divisions summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: baseline; gap: 14px;
+  padding: 14px 20px;
+}
+.divisions summary::-webkit-details-marker { display: none; }
+.divisions summary:hover { background: var(--tint); }
+.divnum { font-family: var(--font-mono); font-weight: 500; color: var(--accent); flex: 0 0 2.2ch; }
+.divname { flex: 1 1 auto; min-width: 0; font-weight: 500; }
+.divcount { font-family: var(--font-mono); font-size: 12px; color: var(--muted); flex: 0 0 auto; }
+.divisions summary::after { content: "+"; font-family: var(--font-mono); color: var(--muted); flex: 0 0 1.5ch; text-align: right; }
+.divisions details[open] summary::after { content: "\2212"; }
+.takeoff { padding: 0 20px 16px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 380px; }
+th { text-align: left; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+td { padding: 8px; border-bottom: 1px dashed var(--line); vertical-align: top; }
+td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.note { font-family: var(--font-mono); font-size: 12px; color: var(--muted); padding: 12px 20px; border-top: 1px solid var(--line); background: var(--tint); }
+
+@media (max-width: 520px) {
+  .sheet-cover { flex-basis: 100%; border-right: 0; border-bottom: 1px solid var(--line); }
+  .divisions summary { padding-inline: 16px; }
+  .takeoff { padding-inline: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .open-btn .chev { transition: none; } }
+</style>
+
+<main class="page">
+  <header class="titleblock">
+    <span class="label">Estimator portfolio</span>
+    <h1>John Zamora</h1>
+    <p class="role">Construction Estimator</p>
+    <p class="intro">Quantity takeoff and cost estimating from the project drawings, organized by CSI division. Open the drawings below to see where each takeoff was done.</p>
+  </header>
+
+  <section aria-labelledby="drawings-title">
+    <div class="section-head">
+      <span class="label">Section A</span>
+      <h2 id="drawings-title">Project Drawings</h2>
+      <p>The full drawing set for the project in one PDF. Opening it lists the CSI divisions where the takeoff and estimate were done.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-cover" aria-hidden="true">
+        <svg viewBox="0 0 110 140">
+          <rect class="ln" x="4" y="4" width="102" height="132"/>
+          <rect class="ln" x="12" y="12" width="86" height="100"/>
+          <line class="ln" x1="12" y1="122" x2="98" y2="122"/>
+          <line class="ln" x1="64" y1="112" x2="64" y2="136"/>
+          <rect class="hi" x="24" y="28" width="46" height="34"/>
+          <line class="ln" x1="24" y1="78" x2="86" y2="78"/>
+          <line class="ln" x1="24" y1="92" x2="70" y2="92"/>
+          <line class="hi" x1="70" y1="28" x2="86" y2="46"/>
+        </svg>
+      </div>
+      <div class="sheet-body">
+        <span class="label">PDF · Drawing set</span>
+        <h3>Project Drawings</h3>
+        <p class="meta">Takeoff and estimate by CSI division</p>
+        <button class="open-btn" id="open-drawings" type="button" aria-expanded="false" aria-controls="divisions">
+          <span id="open-label">Open project drawings</span><span class="chev" aria-hidden="true">&#9656;</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="divisions" id="divisions" hidden>
+      <div class="div-head">
+        <span class="label">CSI MasterFormat</span>
+        <h3>Divisions with takeoff and estimate</h3>
+        <p>Select a division to see its takeoff lines.</p>
+      </div>
+      <div id="div-list"></div>
+      <p class="note">Example quantities shown. Replace with the figures from the actual takeoff.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+var DIVISIONS = [
+  { n: "03", name: "Concrete", rows: [
+    ["Footings, 3,000 psi", "42", "CY"], ["Slab on grade, 4 in.", "3,150", "SF"], ["Reinforcing steel", "5.8", "TON"] ] },
+  { n: "04", name: "Masonry", rows: [
+    ["CMU, 8 in. standard", "6,400", "SF"], ["Grout fill and bar reinforcing", "6,400", "SF"] ] },
+  { n: "05", name: "Metals", rows: [
+    ["Structural steel framing", "18.5", "TON"], ["Metal deck", "4,200", "SF"] ] },
+  { n: "07", name: "Thermal and Moisture Protection", rows: [
+    ["Roof insulation", "4,200", "SF"], ["Membrane roofing", "4,200", "SF"], ["Joint sealants", "1,850", "LF"] ] },
+  { n: "08", name: "Openings", rows: [
+    ["Hollow metal doors and frames", "24", "EA"], ["Aluminum storefront", "620", "SF"] ] },
+  { n: "09", name: "Finishes", rows: [
+    ["Gypsum board partitions", "9,800", "SF"], ["Acoustical ceilings", "3,600", "SF"], ["Interior paint", "21,500", "SF"] ] },
+  { n: "22", name: "Plumbing", rows: [
+    ["Fixtures", "18", "EA"], ["Domestic water piping", "1,200", "LF"] ] },
+  { n: "23", name: "Heating, Ventilating, and Air Conditioning", rows: [
+    ["Rooftop units", "4", "EA"], ["Ductwork", "7,600", "LB"] ] },
+  { n: "26", name: "Electrical", rows: [
+    ["Conduit and wire", "9,400", "LF"], ["Lighting fixtures", "142", "EA"], ["Panelboards", "5", "EA"] ] }
+];
+
+(function () {
+  var list = document.getElementById("div-list");
+  DIVISIONS.forEach(function (d) {
+    var det = document.createElement("details");
+    var sum = document.createElement("summary");
+    sum.innerHTML = '<span class="divnum"></span><span class="divname"></span><span class="divcount"></span>';
+    sum.children[0].textContent = d.n;
+    sum.children[1].textContent = d.name;
+    sum.children[2].textContent = d.rows.length + (d.rows.length === 1 ? " line" : " lines");
+    det.appendChild(sum);
+
+    var wrap = document.createElement("div");
+    wrap.className = "takeoff";
+    var html = '<table><thead><tr><th>Item</th><th class="num">Qty</th><th>Unit</th></tr></thead><tbody>';
+    d.rows.forEach(function (r) {
+      html += "<tr><td></td><td class=\"num\"></td><td></td></tr>";
+    });
+    html += "</tbody></table>";
+    wrap.innerHTML = html;
+    var trs = wrap.querySelectorAll("tbody tr");
+    d.rows.forEach(function (r, i) {
+      var tds = trs[i].children;
+      tds[0].textContent = r[0];
+      tds[1].textContent = r[1];
+      tds[2].textContent = r[2];
+    });
+    det.appendChild(wrap);
+    list.appendChild(det);
+  });
+
+  var btn = document.getElementById("open-drawings");
+  var panel = document.getElementById("divisions");
+  var label = document.getElementById("open-label");
+  btn.addEventListener("click", function () {
+    var open = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", String(!open));
+    panel.hidden = open;
+    label.textContent = open ? "Open project drawings" : "Close project drawings";
+  });
+})();
+</script>
+
+</body></html>
